@@ -1,24 +1,49 @@
 //大鱼果实的距离
 function momFruitsCollision()
 {
-	for(var i=0;i<fruit.num;i++)
+	if(!data.gameOver)
 	{
-		if(fruit.alive[i])
+		for(var i=0;i<fruit.num;i++)
 		{
-			var l=calLength2(fruit.x[i],fruit.y[i],mom.x,mom.y);
-			if(l<900)
+			if(fruit.alive[i])
 			{
-				fruit.dead(i);
+				var l=calLength2(fruit.x[i],fruit.y[i],mom.x,mom.y);
+				if(l<900)
+				{
+					fruit.dead(i);
+					data.fruitNum++;
+					mom.bigBodyCount++;
+					if(mom.bigBodyCount>7)
+						mom.bigBodyCount=7;
+					if(fruit.fruitType[i]=="blue")
+					{
+						data.double=2;
+					}
+					wave.born(fruit.x[i],fruit.y[i]);
+				}
 			}
 		}
 	}
+	
+	
 }
 
 function momBabyCollision()
 {
-	var l=calLength2(mom.x,mom.y,baby.x,baby.y);
-	if(l<900)
+	if(!data.gameOver)
 	{
-		baby.babyBodyCount=0;
+		if(data.fruitNum>0)
+		{
+			var l=calLength2(mom.x,mom.y,baby.x,baby.y);
+			if(l<900)
+			{
+				baby.babyBodyCount=0;
+				data.addScore();
+				mom.bigBodyCount=0;
+				halo.born(baby.x,baby.y);
+			}
+		}
 	}
+	
 }
+

@@ -9,19 +9,20 @@ var momObj=function()
 	this.bigBody=new Image();
 	this.bigTailTimer=0;
 	this.bigTailCount=0;
+	this.bigBodyCount=0;
 }
 momObj.prototype.init=function()
 {
 	this.x=canWidth*0.5;
 	this.y=canHeight*0.5;
 	this.angle=0;
-	this.bigBody.src="./src/bigSwim0.png";
-	}
+}
+
 momObj.prototype.draw=function()
 {
 	//lerp x,y
-	this.x = lerpDistance(mx,this.x,0.98);
-	this.y = lerpDistance(my,this.y,0.98);
+	this.x = lerpDistance(mx,this.x,0.95);
+	this.y = lerpDistance(my,this.y,0.95);
 
 	//delta angle Math.atan2(y,x);
 	var deltaY=my-this.y;
@@ -60,7 +61,13 @@ momObj.prototype.draw=function()
 	ctx1.translate(this.x,this.y);//指定相对原点值
 	ctx1.rotate(this.angle);
 	ctx1.drawImage(momTail[bigTailCount],-momTail[bigTailCount].width*0.5+30,-momTail[bigTailCount].height*0.5);
-	ctx1.drawImage(this.bigBody,-this.bigBody.width*0.5,-this.bigBody.height*0.5);
+	var bigBodyCount=this.bigBodyCount;
+	if(data.double==1)
+	{
+		ctx1.drawImage(momBodyOra[bigBodyCount],-momBodyOra[bigBodyCount].width*0.5,-momBodyOra[bigBodyCount].height*0.5);
+	}
+	else
+		ctx1.drawImage(momBodyBlue[bigBodyCount],-momBodyBlue[bigBodyCount].width*0.5,-momBodyBlue[bigBodyCount].height*0.5);
 	ctx1.drawImage(momEye[bigEyeCount],-momEye[bigEyeCount].width*0.5,-momEye[bigEyeCount].height*0.5);
 		ctx1.restore();
 
